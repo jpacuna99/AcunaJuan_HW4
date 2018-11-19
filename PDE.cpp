@@ -25,6 +25,10 @@ void condicionesInciales(float nu0, int N0);
 void resolverNormal(float nu0, int N0);
 
 
+void condicionesInciales(float nu0, int N0);
+void resolverNormal(float nu0, int N0);
+
+
 
 
 int main()
@@ -102,6 +106,7 @@ void resolverNormal(float nu0, int N0)
 			float o=float(i);
 			float m=float(j);
 		
+
 
 		if(distancia((float(N0)/2.)-1.,(float(N0)/2.)-1.,m,o)>5.0)
 			{
@@ -238,7 +243,33 @@ void resolverAbierto(float nu0, int N0)
 	f.close();
 
 
+
+		if(distancia((float(N0)/2.)-1.,(float(N0)/2.)-1.,m,o)>5.0)
+			{
+				rocaF[i][j]=(nu0*deltat/(deltax*deltax))*(rocaN[i+1][j]+rocaN[i-1][j]-2.0*rocaN[i][j])+(nu0*deltat/(deltay*deltay))*(rocaN[i][j+1]+rocaN[i][j-1]-2.0*rocaN[i][j])+rocaN[i][j];
+					
+			}
+			else
+			{
+				
+			rocaF[i][j]=100.;
+			rocaN[i][j]=100.;
+			}
+
+		rocaF[0][j]=10.;
+		rocaF[i][0]=10.;
+		rocaF[i][49]=10.;
+		rocaF[49][j]=10.;
+		
+		rocaN[i][j]=rocaF[i][j];
+		}
+
 	}
+	
+	
+
+	}
+
 
 
 
@@ -331,6 +362,11 @@ void resolverPeriodico(float nu0, int N0)
 	
 	ofstream f;
 	f.open("Periodicofinal.txt");
+
+	
+	ofstream f;
+	f.open("Normal.txt");
+
 	for(int i=0;i<N0;i++)
 	{
 		for(int j=0;j<N0;j++)
@@ -342,7 +378,5 @@ void resolverPeriodico(float nu0, int N0)
 	f.close();
 	
 }
-
-
 
 
