@@ -214,7 +214,7 @@ void resolverAbierto(float nu0, int N0)
 		rocaF[0][j]=rocaF[1][j];
 		rocaF[i][49]=rocaF[i][48];
 		rocaF[49][j]=rocaF[48][j];
-		
+		//Condiciones abiertas no funcionan bien
 		rocaN[i][j]=rocaF[i][j];
 		
 		}
@@ -309,7 +309,7 @@ void resolverPeriodico(float nu0, int N0)
 		
 		rocaF[j][0]=rocaF[j][49];
 		rocaF[0][i]=rocaF[49][i];
-
+		// Condiciones periodicas solo funcionan de lados opuestos
 		
 		
 		
