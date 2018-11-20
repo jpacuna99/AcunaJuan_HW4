@@ -5,5 +5,6 @@ from mpl_toolkits.mplot3d import Axes3D
 
 datos=np.genfromtxt("45.txt",delimiter=" ")
 
-plt.plot(datos[:143,0],datos[:143,1])
+plt.plot(datos[:,0],datos[:,1])
+plt.ylim(0.,20.)
 plt.show()

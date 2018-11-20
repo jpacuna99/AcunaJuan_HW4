@@ -19,15 +19,12 @@ float deltat= 0.5*deltax/nu;
 float rocaN[N][N];
 float rocaF[N][N];
 
-int cont1=3000;
-int cont2=6500;
+int const cont1=3000;
+int const cont2=6500;
 void condicionesInciales(float nu0, int N0);
 void resolverNormal(float nu0, int N0);
-
-
-void condicionesInciales(float nu0, int N0);
-void resolverNormal(float nu0, int N0);
-
+void resolverAbierto(float nu0, int N0);
+void resolverPeriodico(float nu0, int N0);
 
 
 
@@ -35,7 +32,13 @@ int main()
 {
 	condicionesInciales(nu,N);
 	resolverNormal(nu,N);
-	
+
+	condicionesInciales(nu,N);
+	resolverAbierto( nu, N);
+
+	condicionesInciales(nu,N);
+	resolverPeriodico( nu, N);
+
 
 	return 0;
 }
@@ -53,18 +56,18 @@ float distancia(float x1, float y1,float x2 ,float y2)
 
 void condicionesInciales(float nu0, int N0)
 {
-
+	ofstream f;
 	
 	
 	for(int i=0;i<N0;i++)
 	{
 		for(int j=0;j<N0;j++)
 		{
-			float k=float(i);
+			float e=float(i);
 			float m=float(j);
 		
 
-			if(distancia((float(N0)/2.)-1.,(float(N0)/2.)-1.,m,k)<=5.0)
+			if(distancia((float(N0)/2.)-1.,(float(N0)/2.)-1.,m,e)<=5.0)
 			{
 				rocaN[i][j]=100;	
 			}
@@ -77,7 +80,6 @@ void condicionesInciales(float nu0, int N0)
 
 
 	} 
-	ofstream f;
 	f.open("condicionesI.txt");
 	for(int i=0;i<N0;i++)
 	{
@@ -95,8 +97,9 @@ void condicionesInciales(float nu0, int N0)
 
 
 void resolverNormal(float nu0, int N0)
-{
-	for(int k= 1;k<10000;k++)
+{	
+	ofstream f;
+	for(int l=1;l<1000;l++)
 	{
 	
 	for(int i=1;i<N0+1;i++)
@@ -110,7 +113,7 @@ void resolverNormal(float nu0, int N0)
 
 		if(distancia((float(N0)/2.)-1.,(float(N0)/2.)-1.,m,o)>5.0)
 			{
-				rocaF[i][j]=(nu0*deltat/(deltax*deltax))*(rocaN[i+1][j]+rocaN[i-1][j]-2.0*rocaN[i][j])+(nu0*deltat/(deltay*deltay))*(rocaN[i][j+1]+rocaN[i][j-1]-2.0*rocaN[i][j])+rocaN[i][j];
+			rocaF[i][j]=(nu0*deltat/(deltax*deltax))*(rocaN[i+1][j]+rocaN[i-1][j]-2.0*rocaN[i][j])+(nu0*deltat/(deltay*deltay))*(rocaN[i][j+1]+rocaN[i][j-1]-2.0*rocaN[i][j])+rocaN[i][j];
 					
 			}
 			else
@@ -130,14 +133,15 @@ void resolverNormal(float nu0, int N0)
 		}
 
 	}
-	if(k==cont1)
+	
+	if(l==cont1)
 	{
 	f.open("NormalInt1.txt");
 	for(int i=0;i<N0;i++)
 	{
 		for(int j=0;j<N0;j++)
 		{
-			f<<rocaF[i][j]<<" ";
+			f<<rocaN[i][j]<<" ";
 		}
 		f<<endl;
 	}
@@ -145,42 +149,45 @@ void resolverNormal(float nu0, int N0)
 		
 	}
 	
-	if(k==cont2)
+	if(l==cont2)
 	{
 	f.open("NormalInt2.txt");
 	for(int i=0;i<N0;i++)
 	{
 		for(int j=0;j<N0;j++)
 		{
-			f<<rocaF[i][j]<<" ";
+			f<<rocaN[i][j]<<" ";
 		}
 		f<<endl;
 	}
 	f.close();
-
+	
 
 	}
-
+}
 
 
 
 	
-	ofstream f;
+	
 	f.open("Normalfinal.txt");
 	for(int i=0;i<N0;i++)
 	{
 		for(int j=0;j<N0;j++)
 		{
-			f<<rocaF[i][j]<<" ";
+			f<<rocaN[i][j]<<" ";
 		}
 		f<<endl;
 	}
 	f.close();
 	
+
 }
+
 
 void resolverAbierto(float nu0, int N0)
 {
+	ofstream f;
 	for(int k= 1;k<10000;k++)
 	{
 	
@@ -203,9 +210,8 @@ void resolverAbierto(float nu0, int N0)
 			rocaF[i][j]=100.;
 			rocaN[i][j]=100.;
 			}
-
-		rocaF[0][j]=rocaF[1][j];
 		rocaF[i][0]=rocaF[i][1];
+		rocaF[0][j]=rocaF[1][j];
 		rocaF[i][49]=rocaF[i][48];
 		rocaF[49][j]=rocaF[48][j];
 		
@@ -216,7 +222,7 @@ void resolverAbierto(float nu0, int N0)
 	}
 	if(k==cont1)
 	{
-	f.open("AbiertoInt1.txt");
+	f.open("AbiertolInt1.txt");
 	for(int i=0;i<N0;i++)
 	{
 		for(int j=0;j<N0;j++)
@@ -243,40 +249,15 @@ void resolverAbierto(float nu0, int N0)
 	f.close();
 
 
-
-		if(distancia((float(N0)/2.)-1.,(float(N0)/2.)-1.,m,o)>5.0)
-			{
-				rocaF[i][j]=(nu0*deltat/(deltax*deltax))*(rocaN[i+1][j]+rocaN[i-1][j]-2.0*rocaN[i][j])+(nu0*deltat/(deltay*deltay))*(rocaN[i][j+1]+rocaN[i][j-1]-2.0*rocaN[i][j])+rocaN[i][j];
-					
-			}
-			else
-			{
-				
-			rocaF[i][j]=100.;
-			rocaN[i][j]=100.;
-			}
-
-		rocaF[0][j]=10.;
-		rocaF[i][0]=10.;
-		rocaF[i][49]=10.;
-		rocaF[49][j]=10.;
-		
-		rocaN[i][j]=rocaF[i][j];
-		}
-
-	}
-	
-	
-
 	}
 
 
 
-
-
+	}
 	
-	ofstream f;
+
 	f.open("Abiertofinal.txt");
+
 	for(int i=0;i<N0;i++)
 	{
 		for(int j=0;j<N0;j++)
@@ -287,12 +268,14 @@ void resolverAbierto(float nu0, int N0)
 	}
 	f.close();
 	
-}
 
+
+}
 
 void resolverPeriodico(float nu0, int N0)
 {
-	for(int k= 1;k<10000;k++)
+	ofstream f;
+	for(int k= 1;k<20000;k++)
 	{
 	
 	for(int i=1;i<N0+1;i++)
@@ -314,11 +297,13 @@ void resolverPeriodico(float nu0, int N0)
 			rocaF[i][j]=100.;
 			rocaN[i][j]=100.;
 			}
-
-		rocaF[0][j]=10.;
-		rocaF[i][0]=10.;
-		rocaF[i][49]=10.;
-		rocaF[49][j]=10.;
+		
+		rocaF[i][49]=rocaF[0][j];
+		rocaF[49][j]=rocaF[i][0];
+		
+		rocaF[0][j]=rocaF[i][49];
+		rocaF[i][0]=rocaF[49][j];
+		
 		
 		rocaN[i][j]=rocaF[i][j];
 		
@@ -355,17 +340,13 @@ void resolverPeriodico(float nu0, int N0)
 
 
 	}
-
+	}
 
 
 
 	
-	ofstream f;
+
 	f.open("Periodicofinal.txt");
-
-	
-	ofstream f;
-	f.open("Normal.txt");
 
 	for(int i=0;i<N0;i++)
 	{
@@ -377,6 +358,6 @@ void resolverPeriodico(float nu0, int N0)
 	}
 	f.close();
 	
-}
 
+}
 

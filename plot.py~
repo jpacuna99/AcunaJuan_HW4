@@ -95,7 +95,7 @@ fig.savefig("Periodicas.png")
 
 
 datos=np.genfromtxt("45.txt",delimiter=" ")
-
+print np.shape(datos)
 plt.figure()
 plt.plot(datos[:2000,0],datos[:2000,1],label="45")
 plt.legend()

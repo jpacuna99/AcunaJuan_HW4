@@ -9,37 +9,37 @@ Periodicas.png:condicionesI.txt Periodicofinal.txt PeriodicoInt2.txt PeridicolIn
 45.png:45.txt plot.py
 	python plot.py
 45.txt:ODE.cpp
-	g++ -o datosangulos ODE.cpp
+	g++ -o datosangulos datos.cpp
 	./datosangulos
 PeridicolInt1.txt:PDE.cpp
-	g++ -o datos_x PDE.cpp
+	g++ -o datos_x datos.cpp
 	./datos_x
 PeriodicoInt2.txt:PDE.cpp
-	g++ -o datos_x PDE.cpp
+	g++ -o datos_x datos.cpp
 	./datos_x
 Periodicofinal.txt:PDE.cpp
-	g++ -o datos_x PDE.cpp
+	g++ -o datos_x datos.cpp
 	./datos_x
 Abiertofinal.txt:PDE.cpp
-	g++ -o datos_x PDE.cpp
+	g++ -o datos_x datos.cpp
 	./datos_x
 AbiertoInt2.txt:PDE.cpp
-	g++ -o datos_x PDE.cpp
+	g++ -o datos_x datos.cpp
 	./datos_x
 AbiertolInt1.txt:PDE.cpp
-	g++ -o datos_x PDE.cpp
+	g++ -o datos_x datos.cpp
 	./datos_x
 Normalfinal.txt:PDE.cpp
-	g++ -o datos_x PDE.cpp
+	g++ -o datos_x datos.cpp
 	./datos_x
 NormalInt2.txt:PDE.cpp
-	g++ -o datos_x PDE.cpp
+	g++ -o datos_x datos.cpp
 	./datos_x
 NormalInt1.txt:PDE.cpp
-	g++ -o datos_x PDE.cpp
+	g++ -o datos_x datos.cpp
 	./datos_x
 condicionesI.txt:PDE.cpp
-	g++ -o datos_x PDE.cpp
+	g++ -o datos_x datos.cpp
 	./datos_x
 clean:
 	rm *.txt

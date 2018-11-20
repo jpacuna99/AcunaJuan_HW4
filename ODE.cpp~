@@ -22,7 +22,7 @@ int main()
 	paso(45.);
 	for(int i=1; i<8;i++)
 	{	
-		paso(i*10*3.1415926/180.);
+		paso(i*10);
 	}
 	return 0;
 }
