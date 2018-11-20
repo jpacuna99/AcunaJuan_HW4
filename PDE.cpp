@@ -304,6 +304,14 @@ void resolverPeriodico(float nu0, int N0)
 		rocaF[0][j]=rocaF[49][j];
 		rocaF[i][0]=rocaF[i][49];
 		
+		rocaF[49][i]=rocaF[0][i];
+		rocaF[j][49]=rocaF[j][0];
+		
+		rocaF[j][0]=rocaF[j][49];
+		rocaF[0][i]=rocaF[49][i];
+
+		
+		
 		
 		rocaN[i][j]=rocaF[i][j];
 		
